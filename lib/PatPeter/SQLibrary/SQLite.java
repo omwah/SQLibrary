@@ -187,8 +187,14 @@ public class SQLite extends Database {
 			return false;
 		}
 		try {
-			md.getTables(null, null, table, null);
-			return true;
+			ResultSet tables = md.getTables(null, null, table, null);
+			if (tables.next()) {
+				tables.close();
+				return true;
+			} else {
+				tables.close();       
+				return false;
+			}
 		} catch (SQLException e) {
 			return false;
 		}
